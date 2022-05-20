@@ -36,10 +36,38 @@ int main(void)
     {
         __delay_cycles(1500000);
         P1OUT^=BIT0;
+        P1OUT |= BIT6;
+        __delay_cycles(9000);
+        P1OUT &= ~BIT6;
+        __delay_cycles(4500*2);
+        P1OUT |= BIT6;
 
+        for(i=0;i<1;i++)
+        {
+            temp = vals[i];
+            for(j=0;j<8;j++)
+            {
+                temp = vals[i] >> 1*j;
+                if(temp&0x01)
+                {
+                    P1OUT |= BIT6;
+                    delay(5);
+                    P1OUT &= ~BIT6;
+                    delay(17);
+                }
+                else
+                {
+                    P1OUT |= BIT6;
+                    delay(5);
+                    P1OUT &= ~BIT6;
+                    delay(5);
+                }
+            }
+        }
+    }
 
     }
-}
+
 
 
 #pragma vector = TIMER0_A0_VECTOR
@@ -66,17 +94,16 @@ __interrupt void PORT1_ISR(void)
     unsigned char flags = P1IFG & P1IE;
     if (flags & BIT3)
     {
-
 //        P1OUT ^= 0x01;
-
-        P1OUT |= BIT6;
-        __delay_cycles(9000);
-        P1OUT &= ~BIT6;
-        __delay_cycles(4500*2);
-        P1OUT |= BIT6;
-        __delay_cycles(9000);
-        P1OUT &= ~BIT6;
-        __delay_cycles(4500*2);
+//
+//        P1OUT |= BIT6;
+//        __delay_cycles(9000);
+//        P1OUT &= ~BIT6;
+//        __delay_cycles(4500*2);
+//        P1OUT |= BIT6;
+//        __delay_cycles(9000);
+//        P1OUT &= ~BIT6;
+//        __delay_cycles(4500*2);
 
 //        for(i=0;i<1;i++)
 //        {
